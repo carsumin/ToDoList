@@ -26,22 +26,21 @@
         ng-app="myApp"
         ng-controller="myController"
 >
-
     <h3>Todo App</h3>
     <h3> </h3>
     <div class="d-flex align-items-center mb-3" style="display: inline-block;">
         <form class="form-group mr-3 mb-0" th:action="@{/todo/register.do}" th:object="${todo}" method="post">
             <div style="display: inline-block">
-                <input th:field="*{item}" type="text" class="form-control" style="vertical-align: middle" placeholder="할 일을 추가하세요." />
+                <input th:field="*{item}" type="text" class="form-control" style="vertical-align:middle" placeholder="할 일을 적어주세요"/>
             </div>
             <div style="display: inline-block">
-                <button type="submit" class="btn-save">추가</button>
+                <button type="submit" class="btn btn-primary mr-3">추가</button>
             </div>
         </form>
     </div>
 
     <div class="table-wrapper" th:object="${todo}" method="post">
-        <table class="todo_table">
+        <table class="table table-hover table-bordered">
             <thead>
             <tr>
                 <th>No.</th>
@@ -51,14 +50,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${not #lists.isEmpty(toDoList)}" th:each="todo,index:${toDoList}">
-                <td th:text="${index.index}" th:style="${todo.status == 'Y' ? 'text-decoration: line-through;': 'text-decoration: none;'}"></td> <!--no-->
+            <tr th:if="${not #lists.isEmpty(toDoList)}" th:each="todo,index : ${toDoList}">
+                <td th:text="${index.index}" th:style="${todo.status == 'Y' ? 'text-decoration: line-through;': 'text-decoration: none;'}"></td> <!-- no-->
                 <td th:text="${todo.item}" th:style="${todo.status == 'Y' ? 'text-decoration: line-through;': 'text-decoration: none;'}"></td> <!--item-->
-                <td th:text="${todo.status}"></td> <!--status-->
+                <td th:text="${todo.status}"></td> <!-- status-->
                 <td>
-                    <button type="button" class="btn-success" th:onclick="updateToDoList( [[${todo.idx}]], [[${index.index}]] )">완료</button>
-                    <button type="button" class="btn-danger" th:onclick="deleteToDoList( [[${todo.idx}]], [[${index.index}]] )">삭제</button>
-                </td>
+                    <button type="button" class="btn btn-danger" th:onclick="deleteToDoList([[  ${todo.idx}]], [[${index.index} ]])">Delete</button>
+                    <button type="button" class="btn btn-success" th:onclick="updateToDoList([[ ${todo.idx}]], [[${index.index} ]])">Finished</button>
+                </td> <!-- action-->
             </tr>
             </tbody>
         </table>
@@ -67,13 +66,14 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+        /*<![CDATA[*/
 
-        function updateToDoList(idx, index){
-            if (confirm(index + "번 할 일을 완료했습니까?")){
-                let uri = null;
-                let html = "";
+        function updateToDoList(idx, index) {
+            if (confirm(index + "번 할 일을 하셨나요?")) {
+                var uri = /*[[ @{/todo/update.do} ]]*/null;
+                var html = "";
 
-                html += '<form name="dataForm" action="'+uri+'"method="post">';
+                html += '<form name="dataForm" action="'+uri+'" method="post">';
                 html += '<input type="hidden" name="idx" value="'+idx+'" />';
                 html += '</form>';
 
@@ -82,12 +82,12 @@
             }
         }
 
-        function deleteToDoList(idx, index){
-            if (confirm(index + "번 할 일을 삭제하시겠습니까?")){
-                let uri = null;
-                let html = "";
+        function deleteToDoList(idx, index) {
+            if (confirm(index + "번 할 일을 삭제할까요?")) {
+                var uri = /*[[ @{/todo/delete.do} ]]*/null;
+                var html = "";
 
-                html += '<form name="dataForm" action"'+uri+'"method="post">';
+                html += '<form name="dataForm" action="'+uri+'" method="post">';
                 html += '<input type="hidden" name="idx" value="'+idx+'" />';
                 html += '</form>';
 
@@ -95,23 +95,23 @@
                 document.dataForm.submit();
             }
         }
+
+        /*]]>*/
     </script>
-</th:block>
-
-<script
-        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"
-></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"
-></script>
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"
-></script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"
+    ></script>
 </body>
 </html>
