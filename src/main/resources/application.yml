@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost/ORCL
+    username: 아이디
+    password: 비밀번호
+  thymeleaf:
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  config:
+    location: currentdir/config
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    multiple-result-sets-enabled: false
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    default-fetch-size: 500
+
+server:
+  port: 9090
+  tomcat:
+    additional-tld-skip-patterns:  "*.jar"
+
