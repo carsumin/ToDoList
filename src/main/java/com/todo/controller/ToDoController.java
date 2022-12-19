@@ -46,7 +46,7 @@ public class ToDoController {
     }
 
     /* 고유번호로 할 일 삭제 */
-    @PostMapping(value = "/todo.delete.do")
+    @PostMapping(value = "/todo/delete.do")
     public String deleteToDoList(@RequestParam(value = "idx", required = false)Long idx){
         System.out.println("삭제" + idx);
         toDoService.deleteToDoList(idx);

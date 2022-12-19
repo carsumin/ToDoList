@@ -31,7 +31,7 @@
     <div class="d-flex align-items-center mb-3" style="display: inline-block;">
         <form class="form-group mr-3 mb-0" th:action="@{/todo/register.do}" th:object="${todo}" method="post">
             <div style="display: inline-block">
-                <input th:field="*{item}" type="text" class="form-control" style="vertical-align:middle" placeholder="할 일을 적어주세요"/>
+                <input th:field="*{item}" type="text" class="form-control" style="vertical-align:middle" placeholder="할 일을 적어주세요."/>
             </div>
             <div style="display: inline-block">
                 <button type="submit" class="btn btn-primary mr-3">추가</button>
@@ -55,8 +55,8 @@
                 <td th:text="${todo.item}" th:style="${todo.status == 'Y' ? 'text-decoration: line-through;': 'text-decoration: none;'}"></td> <!--item-->
                 <td th:text="${todo.status}"></td> <!-- status-->
                 <td>
-                    <button type="button" class="btn btn-danger" th:onclick="deleteToDoList([[  ${todo.idx}]], [[${index.index} ]])">Delete</button>
-                    <button type="button" class="btn btn-success" th:onclick="updateToDoList([[ ${todo.idx}]], [[${index.index} ]])">Finished</button>
+                    <button type="button" class="btn btn-danger" th:onclick="deleteToDoList([[  ${todo.idx}]], [[${index.index} ]])">삭제</button>
+                    <button type="button" class="btn btn-success" th:onclick="updateToDoList([[ ${todo.idx}]], [[${index.index} ]])">완료</button>
                 </td> <!-- action-->
             </tr>
             </tbody>
@@ -70,8 +70,8 @@
 
         function updateToDoList(idx, index) {
             if (confirm(index + "번 할 일을 하셨나요?")) {
-                var uri = /*[[ @{/todo/update.do} ]]*/null;
-                var html = "";
+                let uri = /*[[ @{/todo/update.do} ]]*/null;
+                let html = "";
 
                 html += '<form name="dataForm" action="'+uri+'" method="post">';
                 html += '<input type="hidden" name="idx" value="'+idx+'" />';
@@ -84,8 +84,8 @@
 
         function deleteToDoList(idx, index) {
             if (confirm(index + "번 할 일을 삭제할까요?")) {
-                var uri = /*[[ @{/todo/delete.do} ]]*/null;
-                var html = "";
+                let uri = /*[[ @{/todo/delete.do} ]]*/null;
+                let html = "";
 
                 html += '<form name="dataForm" action="'+uri+'" method="post">';
                 html += '<input type="hidden" name="idx" value="'+idx+'" />';
